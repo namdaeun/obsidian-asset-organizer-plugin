@@ -5,7 +5,7 @@ interface AssetOrganizer {
 }
 
 const DEFAULT_SETTINGS: AssetOrganizer = {
-	folder: "images",
+	folder: "_images",
 };
 
 export default class AssetOrganizerPlugin extends Plugin {
@@ -14,6 +14,8 @@ export default class AssetOrganizerPlugin extends Plugin {
 	async onload() {
 		await this.loadSettings();
 
+		this.organizeExistingAssets();
+
 		this.registerEvent(
 			this.app.vault.on("create", (file) => {
 				this.handleFileCreate(file);
@@ -21,13 +23,26 @@ export default class AssetOrganizerPlugin extends Plugin {
 		);
 	}
 
-	IMAGE_EXTENSIONS = /\.(png|jpg|jpeg|gif|webp)$/i;
+	isImage(file: TFile) {
+		const IMAGE_EXTENSIONS = /\.(png|jpg|jpeg|gif|webp)$/i;
+		return IMAGE_EXTENSIONS.test(file.name);
+	}
+
+	async organizeExistingAssets() {
+		const files = this.app.vault.getFiles();
+
+		for (const file of files) {
+			if (!this.isImage(file)) continue;
+
+			await this.moveFileToAssetsFolder(file);
+		}
+		new Notice("Existing assets organized");
+	}
 
 	async handleFileCreate(file: TAbstractFile) {
 		if (!(file instanceof TFile)) return;
 
-		const isImage = this.IMAGE_EXTENSIONS.test(file.name);
-		if (!isImage) return;
+		if (!this.isImage(file)) return;
 
 		await this.moveFileToAssetsFolder(file);
 	}
