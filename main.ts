@@ -8,7 +8,7 @@ const DEFAULT_SETTINGS: ImagesOrganizer = {
 	folderName: "_images",
 };
 
-export default class AssetOrganizerPlugin extends Plugin {
+export default class ImagesOrganizerPlugin extends Plugin {
 	settings: ImagesOrganizer;
 
 	async onload() {
