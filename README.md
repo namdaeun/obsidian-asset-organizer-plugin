@@ -1,94 +1,91 @@
-# Obsidian Sample Plugin
+# Images Organizer Plugin
 
-This is a sample plugin for Obsidian (https://obsidian.md).
+옵시디언 볼트 내 분산된 이미지 파일들을 자동으로 `_images` 폴더로 정리해주는 플러그인입니다.
 
-This project uses TypeScript to provide type checking and documentation.
-The repo depends on the latest plugin API (obsidian.d.ts) in TypeScript Definition format, which contains TSDoc comments describing what it does.
+## 문제 인식
 
-This sample plugin demonstrates some of the basic functionality the plugin API can do.
-- Adds a ribbon icon, which shows a Notice when clicked.
-- Adds a command "Open Sample Modal" which opens a Modal.
-- Adds a plugin setting tab to the settings page.
-- Registers a global click event and output 'click' to the console.
-- Registers a global interval which logs 'setInterval' to the console.
+옵시디언을 사용하다 보면 이미지 파일들이 여러 곳에 분산되어 저장됩니다:
 
-## First time developing plugins?
+-   노트와 같은 폴더에 저장된 이미지
+-   루트 폴더에 저장된 이미지
+-   클립보드에서 붙여넣기로 생성된 이미지
+-   드래그 앤 드롭으로 추가된 이미지
 
-Quick starting guide for new plugin devs:
+이렇게 분산된 이미지들은 볼트 관리를 어렵게 만들고, 백업이나 정리 시 혼란을 초래합니다.
 
-- Check if [someone already developed a plugin for what you want](https://obsidian.md/plugins)! There might be an existing plugin similar enough that you can partner up with.
-- Make a copy of this repo as a template with the "Use this template" button (login to GitHub if you don't see it).
-- Clone your repo to a local development folder. For convenience, you can place this folder in your `.obsidian/plugins/your-plugin-name` folder.
-- Install NodeJS, then run `npm i` in the command line under your repo folder.
-- Run `npm run dev` to compile your plugin from `main.ts` to `main.js`.
-- Make changes to `main.ts` (or create new `.ts` files). Those changes should be automatically compiled into `main.js`.
-- Reload Obsidian to load the new version of your plugin.
-- Enable plugin in settings window.
-- For updates to the Obsidian API run `npm update` in the command line under your repo folder.
+## 해결책
 
-## Releasing new releases
+**Images Organizer Plugin**은 이 문제를 자동으로 해결합니다:
 
-- Update your `manifest.json` with your new version number, such as `1.0.1`, and the minimum Obsidian version required for your latest release.
-- Update your `versions.json` file with `"new-plugin-version": "minimum-obsidian-version"` so older versions of Obsidian can download an older version of your plugin that's compatible.
-- Create new GitHub release using your new version number as the "Tag version". Use the exact version number, don't include a prefix `v`. See here for an example: https://github.com/obsidianmd/obsidian-sample-plugin/releases
-- Upload the files `manifest.json`, `main.js`, `styles.css` as binary attachments. Note: The manifest.json file must be in two places, first the root path of your repository and also in the release.
-- Publish the release.
+-   플러그인 활성화 시 기존의 모든 이미지를 `_images` 폴더로 자동 정리
+-   새로 추가되는 이미지도 자동으로 `_images` 폴더로 이동
 
-> You can simplify the version bump process by running `npm version patch`, `npm version minor` or `npm version major` after updating `minAppVersion` manually in `manifest.json`.
-> The command will bump version in `manifest.json` and `package.json`, and add the entry for the new version to `versions.json`
+## 기능
 
-## Adding your plugin to the community plugin list
+-   ✅ 기존 이미지 파일 자동 정리
+-   ✅ 새로 생성되는 이미지 파일 자동 이동
+-   ✅ 지원 포맷: PNG, JPG, JPEG, GIF, WebP
 
-- Check the [plugin guidelines](https://docs.obsidian.md/Plugins/Releasing/Plugin+guidelines).
-- Publish an initial version.
-- Make sure you have a `README.md` file in the root of your repo.
-- Make a pull request at https://github.com/obsidianmd/obsidian-releases to add your plugin.
+## 설치 방법
 
-## How to use
+### 수동 설치
 
-- Clone this repo.
-- Make sure your NodeJS is at least v16 (`node --version`).
-- `npm i` or `yarn` to install dependencies.
-- `npm run dev` to start compilation in watch mode.
+1. 이 저장소를 클론하거나 다운로드합니다.
+2. `npm install`로 의존성을 설치합니다.
+3. `npm run build`로 빌드합니다.
+4. 볼트 폴더의 `.obsidian/plugins/obsidian-images-organizer-plugin/` 폴더를 생성합니다.
+5. 빌드된 `main.js`와 `manifest.json`을 해당 폴더에 복사합니다.
+6. Obsidian을 재시작합니다.
+7. **설정 → 커뮤니티 플러그인**에서 "Images Organizer Plugin"을 활성화합니다.
 
-## Manually installing the plugin
+### 개발 환경 설치
 
-- Copy over `main.js`, `styles.css`, `manifest.json` to your vault `VaultFolder/.obsidian/plugins/your-plugin-id/`.
+```bash
+npm install
 
-## Improve code quality with eslint (optional)
-- [ESLint](https://eslint.org/) is a tool that analyzes your code to quickly find problems. You can run ESLint against your plugin to find common bugs and ways to improve your code. 
-- To use eslint with this project, make sure to install eslint from terminal:
-  - `npm install -g eslint`
-- To use eslint to analyze this project use this command:
-  - `eslint main.ts`
-  - eslint will then create a report with suggestions for code improvement by file and line number.
-- If your source code is in a folder, such as `src`, you can use eslint with this command to analyze all files in that folder:
-  - `eslint ./src/`
+npm run dev
 
-## Funding URL
-
-You can include funding URLs where people who use your plugin can financially support it.
-
-The simple way is to set the `fundingUrl` field to your link in your `manifest.json` file:
-
-```json
-{
-    "fundingUrl": "https://buymeacoffee.com"
-}
+npm run build
 ```
 
-If you have multiple URLs, you can also do:
+## 사용 방법
 
-```json
-{
-    "fundingUrl": {
-        "Buy Me a Coffee": "https://buymeacoffee.com",
-        "GitHub Sponsor": "https://github.com/sponsors",
-        "Patreon": "https://www.patreon.com/"
-    }
-}
+플러그인을 활성화하면 자동으로 동작합니다:
+
+1. **기존 이미지 정리**: 플러그인 활성화 시 볼트 내 모든 이미지가 `_images` 폴더로 이동됩니다.
+2. **새 이미지 자동 정리**: 이후 추가되는 모든 이미지는 자동으로 `_images` 폴더에 저장됩니다.
+
+## 폴더 구조
+
+`as-is`
+
+```
+📁 My Vault
+├── 📄 Note1.md
+├── 📁 Folder
+│   └── 📄 Note2.md
+├── 🖼️ image1.png
+├── 🖼️ image2.png
+└── 🖼️ screenshot.gif
+
 ```
 
-## API Documentation
+`to-be`
 
-See https://github.com/obsidianmd/obsidian-api
+```
+📁 My Vault
+├── 📁 _images
+│   ├── 🖼️ image1.png
+│   ├── 🖼️ image2.jpg
+│   └── 🖼️ screenshot.webp
+├── 📄 Note1.md
+└── 📁 Folder
+    └── 📄 Note2.md
+
+```
+
+## 주의사항
+
+-   플러그인 활성화 시 모든 이미지가 즉시 이동됩니다. 백업을 권장합니다.
+-   이미지 이동 시 노트 내 링크는 Obsidian의 내장 기능으로 자동 업데이트됩니다.
+-   `_images` 폴더가 없으면 자동으로 생성됩니다.
