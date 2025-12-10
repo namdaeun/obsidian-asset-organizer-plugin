@@ -1,9 +1,9 @@
 {
-	"id": "obsidian-asset-organizer-plugin",
-	"name": "Asset Organizer Plugin",
+	"id": "obsidian-images-organizer-plugin",
+	"name": "Images Organizer Plugin",
 	"version": "1.0.0",
 	"minAppVersion": "1.0.0",
-	"description": "Automatically organizes images and attachments into structured folders, keeping your vault clean and tidy.", 
+	"description": "Automatically organizes images into a structured folder, keeping your vault clean and tidy.",
 	"author": "namdaeun",
 	"authorUrl": "https://github.com/namdaeun",
 	"isDesktopOnly": false
