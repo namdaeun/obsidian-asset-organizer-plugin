@@ -1,15 +1,18 @@
 {
-	"name": "obsidian-images-organizer-plugin",
+	"name": "Image Organizer Plugin",
 	"version": "1.0.0",
 	"description": "Automatically organizes images into a structured folder, keeping your vault clean and tidy.",
 	"main": "main.js",
 	"scripts": {
 		"dev": "node esbuild.config.mjs",
 		"build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
-		"version": "node version-bump.mjs && git add manifest.json versions.json"
+		"version": "node version-bump.mjs && git add manifest.json versions.json",
+		"deploy": "npm run build && cp main.js manifest.json styles.css ../Obsidian Vault/.obsidian/plugins/obsidian-image-organizer-plugin/"
 	},
-	"keywords": [],
-	"author": "",
+	"keywords": [
+		"image"
+	],
+	"author": "namdaeun",
 	"license": "MIT",
 	"devDependencies": {
 		"@types/node": "^16.11.6",
